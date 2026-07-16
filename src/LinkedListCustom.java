@@ -18,8 +18,18 @@ public class  LinkedListCustom<T>
     NodeCustom<T> last;
     int size = 0;
 
+    /**
+     * Khởi tạo một danh sách rỗng.
+     */
     public LinkedListCustom() {
     }
+
+    /**
+     * Khởi tạo danh sách với Node đâầu, Node cuối và số lượng phần tử
+     * @param first Node đầu
+     * @param last Node cuối
+     * @param size số lượng phần tử
+     */
     public LinkedListCustom(NodeCustom<T> first, NodeCustom<T> last, int size) {
         this.first = first;
         this.last = last;
@@ -27,23 +37,19 @@ public class  LinkedListCustom<T>
     }
 
     /**
-     * check empty theo size
-     * @return
+     * Kiểm tra danh sách có rỗng hay không.
+     *
+     * @return {@code true} nếu danh sách không chứa phần tử nào,
+     *         ngược lại trả về {@code false}
      */
     public boolean isEmpty(){
         return size == 0;
     }
 
     /**
-     * thêm đầu
-     * flow:
-     * - lưu lại node first hiện tại vào f
-     * - tạo Node mới newNode(null, value, first)
-     * -> gán node first = newNode
-     * -> kiểm tra f null hay không:
-     *      -> nếu f null thì gán last = newNode ( first == last == (null,value,null))
-     *      -> nếu f != null thì gán f.prev = newNode
-     *  -> tăng kích thước list: size ++
+     * Thêm Node mới vào đầu danh sách.
+     * Nếu danh sách đang rỗng, Node mới sẽ đồng thời là last và first.
+     * Ngược lại, Node mới được liên kết trước Node first.
      * @param value giá trị của Node mới
      */
     public void addFirst(T value){
@@ -58,15 +64,9 @@ public class  LinkedListCustom<T>
         size++;
     }
     /**
-     * thêm cuối
-     * flow:
-     * - lưu lại node last hiện tại vào l
-     * - tạo Node mới newNode(last, value, null)
-     * -> gán node last = newNode
-     * -> kiểm tra l null hay không:
-     *      -> nếu l null thì gán first = newNode ( first == last == (null,value,null))
-     *      -> nếu l != null thì gán l.next = newNode (gán địa chỉ node mới vào node last cũ)
-     *  -> tăng kích thước list: size ++
+     * Thêm Node mới vào cuối danh sách.
+     * Nếu danh sách đang rỗng, Node mới sẽ đồng thời là last và first.
+     * Ngược lại, Node mới được liên kết sau Node last.
      * @param value giá trị của Node mới
      */
     public void addLast(T value){
@@ -82,7 +82,8 @@ public class  LinkedListCustom<T>
     }
 
     /**
-     * thêm vào cuối, sử dụng lại hàm addLast()
+     * Thêm Node mới vào danh sách.
+     * Tương tự thêm vào cuối, gọi lại hàm addLast()
      * @param value giá trị của Node mới
      */
     public void add(T value){
@@ -90,20 +91,10 @@ public class  LinkedListCustom<T>
     }
 
     /**
-     * thêm Node theo vào vị trí bất kì
-     * flow:
-     * - nếu index không hợp lệ -> return
-     * -> nếu index == size: là thêm vào cuối -> gọi hàm addLast() -> return
-     * -> nếu index == 0: là thêm đầu -> gọi hàm addFirst() -> return
-     * -> nếu index hợp lệ và != 0, != size:
-     *  -> curentNode = get(index) : lấy node ở vị trí cần thêm
-     *  -> prev = currentNode.prev : node trước của currentNode
-     *  -> newNode = (prev, value, currentNode) : node mới cần thêm
-     *  -> chèn new Node vào giữa current và prev:
-     *      -> prev.next = newNode
-     *      -> currentNode.prev = newNode;
-     *  -> tăng kích thước list: size ++
-     *
+     * Thêm Node theo vào vị trí bất kì.
+     * Nếu không hợp lệ -> return.
+     * Nếu index là đầu hoặc cuối danh sách, sẽ gọi lại addFirst() hoặc addLast().
+     * Nếu 0 < index < size, tìm Node ở vị trí index, chèn Node mới vào trước Node vừa tìm
      * @param index vị trí cần thêm
      * @param value giá trị node mới
      */
@@ -128,13 +119,11 @@ public class  LinkedListCustom<T>
     }
 
     /**
-     * flow:
-     * -> kiểm tra index hợp lệ: nếu sai -> return null
-     * -> tạo i=0, và currentNode =first
-     * -> lặp: cho tới khi i==index
-     *  -> currentNode = currentNode.next;
-     *  -> i++;
-     * -> return Node cần tìm
+     * Lấy phần tử theo index.
+     * Nếu index không hợp lệ -> return null.
+     * Nếu index hợp lệ, tạo i=0 và tạo Node current = first,
+     * sau mỗi lần lặp thì i+1 và current = Node sau nó,
+     * lặp tới khi i==index thì dừng -> trả về node cần tìm
      * @param index
      * @return Node cần tìm hoặc null
      */
@@ -152,7 +141,7 @@ public class  LinkedListCustom<T>
     }
 
     /**
-     * lấy Node đầu tiên
+     * Lấy Node đầu tiên
      * @return first
      */
     public NodeCustom<T> getFirst() {
@@ -160,7 +149,7 @@ public class  LinkedListCustom<T>
     }
 
     /**
-     * lấy Node cuối
+     * Lấy Node cuối
      * @return last
      */
     public NodeCustom<T> getLast() {
@@ -168,19 +157,18 @@ public class  LinkedListCustom<T>
     }
 
     /**
-     * xóa Node đầu tiên
-     * flow:
-     * -> nếu size = 1 -> last = first = null
-     * -> nếu size != 1:
-     *  -> gán first = node sau nó
-     *      -> first = first.next
-     *      -> first.prev = null
-     * -> giảm kích thước list: size --
+     * Xóa Node đầu danh sách.
+     * nếu size = 0 -> return.
+     * nếu size = 1 -> xóa node sẽ khiến danh sách rỗng, gán last và first = null, size = 0.
+     * nếu size > 1 -> gán first = node sau nó, size --
      */
     public void removeFirst() {
-        if(size==1){
+        if (size == 0) return;
+        if(size == 1){
             last = null;
             first = null;
+            size = 0;
+            return;
         }
         first = first.next;
         first.prev = null;
@@ -188,14 +176,10 @@ public class  LinkedListCustom<T>
     }
 
     /**
-     * xóa Node cuối
-     * flow:
-     * -> nếu size = 1 -> last = first = null
-     * -> nếu size != 1:
-     *  -> gán last = node trước nó:
-     *      -> last = last.prev
-     *      -> last.next = null
-     * -> giảm kích thước list: size --
+     * Xóa Node cuối danh sách.
+     * nếu size = 0 -> return.
+     * nếu size = 1 -> xóa node sẽ khiến danh sách rỗng, gán last và first = null, size = 0.
+     * nếu size > 1 -> gán last = node trước nó, size --
      */
     public void removeLast() {
         if(size==1){
@@ -207,26 +191,18 @@ public class  LinkedListCustom<T>
         size --;
     }
     /**
-     * xóa Node cuối
-     * gọi lại hàm removeLast()
+     * Xóa Node.
+     * tương tự xóa node cuối danh sách, gọi lại hàm removeLast()
      */
     public void remove() {
         removeLast();
     }
 
     /**
-     * xóa theo index
-     * flow:
-     * -> kiểm tra index hợp lệ: nếu sai -> return null
-     * -> nếu index == 0 : xóa đầu -> gọi removeFirst() -> return
-     * -> nếu index == size-1: xóa cuối -> gọi removeLast() -> return
-     * -> nếu  0 < index < size -1:
-     *  -> currentNode = get(index):  lấy node ở vị trí cần xóa
-     *  -> prev, next : node ở trước và sau currentNode
-     *  -> đổi con trỏ để xóa current:
-     *      -> prev.next = next;
-     *      -> next.prev = prev;
-     *  -> giảm kích thước : size--
+     * Xóa theo index.
+     * nếu index không hợp lệ -> return.
+     * nếu index là vị trí đầu hoặc cuối -> gọi lại hàm removeFirst() hoặc removeLast().
+     * nếu index ở các vị trí còn lại -> tìm node current theo vị trí index, xóa node current bằng cách liên kết node trước và sau node current lại
      * @param index  vị trí cần xóa
      */
     public void remove(int index) {
@@ -250,11 +226,8 @@ public class  LinkedListCustom<T>
     }
 
     /**
-     * check giá trị value có trong list hay k
-     * flow:
-     * -> tạo current = first
-     * -> lặp current = current.next cho tới khi current == empty
-     *  -> nếu có node có value = value cần check -> return true
+     * Check giá trị value có trong danh sách hay k.
+     * Kiểm tra bằng cách lặp từ node fisrt cho tới node last
      * @param value giá trị cần check
      * @return
      */
@@ -270,11 +243,10 @@ public class  LinkedListCustom<T>
     }
 
     /**
-     * tìm vị trí theo value
-     * flow:
-     * - tạo current = first, i=0
-     * -> lặp current = current.next
-     * -> cho tới khi current.value = value
+     * Tìm vị trí theo value.
+     * Tạo i = 0 và current = first. Sau mỗi bước lặp i=i+1 và current = node sau nó.
+     * Nếu tìm thấy current có value bằng với value cần tìm thì return i.
+     * ngược lại return -1
      * @param value
      * @return lấy vị trí của Node theo value
      */
