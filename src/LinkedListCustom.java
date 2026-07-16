@@ -91,7 +91,7 @@ public class  LinkedListCustom<T>
     }
 
     /**
-     * Thêm Node theo vào vị trí bất kì.
+     * Thêm Node theo vào vị trí chỉ định.
      * Nếu không hợp lệ -> return.
      * Nếu index là đầu hoặc cuối danh sách, sẽ gọi lại addFirst() hoặc addLast().
      * Nếu 0 < index < size, tìm Node ở vị trí index, chèn Node mới vào trước Node vừa tìm
@@ -272,7 +272,7 @@ public class  LinkedListCustom<T>
     }
 
     /**
-     * in ra màn hình toàn bộ value của mỗi node
+     * in ra màn hình toàn bộ value của từng node
      */
     public void print(){
         NodeCustom<T> currentNode = first;
